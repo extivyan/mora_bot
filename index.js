@@ -1,3 +1,16 @@
+const express = require("express");
+const app = express();
+
+const PORT = process.env.PORT || 3000;
+
+app.get("/", (req, res) => {
+  res.send("🤖 Mora Bot is running!");
+});
+
+app.listen(PORT, () => {
+  console.log("Web server running on port " + PORT);
+});
+
 const { fork } = require('child_process');
 const { join } = require('path');
 const fs = require('fs-extra');
