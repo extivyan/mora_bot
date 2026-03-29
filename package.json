@@ -1,0 +1,19 @@
+{
+  "name": "bot_modules",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "6.7.19",
+    "chalk": "^4.1.2",
+    "cheerio": "^1.1.2",
+    "fs-extra": "^11.3.1",
+    "jimp": "0.16.1",
+    "node-fetch": "^2.7.0",
+    "node-webpmux": "^3.2.1"
+  }
+}

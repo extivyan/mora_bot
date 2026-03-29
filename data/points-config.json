@@ -1,0 +1,11 @@
+{
+  "enabled": true,
+  "messages": {
+    "system_disabled": "نظام النقاط مقفل حالياً 🔒",
+    "insufficient_points": "نقاطك غير كافية! ❌\nالمطلوب: {amount}\nرصيدك: {balance}",
+    "points_deducted": "تم خصم {amount} نقطة ✅\nالرصيد الجديد: {newBalance}",
+    "points_added": "تم إضافة {amount} نقطة ✅\nالرصيد الجديد: {newBalance}",
+    "balance_check": "رصيدك: {balance} نقطة 🪙",
+    "rank_info": "تصنيفك: {rank} 🎖️"
+  }
+}

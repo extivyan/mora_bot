@@ -1,0 +1,175 @@
+// File: plugins/edit.js
+// Feature: TikTok EDIT Carousel
+// Developers: izana x radio (format by EXT)
+// Updated: API tikwm.com
+
+const axios = require('axios');
+const {
+  generateWAMessageContent,
+  generateWAMessageFromContent,
+  proto
+} = require('@whiskeysockets/baileys');
+
+module.exports = {
+  command: 'ايديت',
+  category: 'downloader',
+  description: 'بحث TikTok EDIT مع Carousel',
+
+  async execute(sock, m) {
+    const chatId = m.key.remoteJid;
+    const prefix = '.';
+    const commandName = 'ايديت';
+
+    const text =
+      m.message?.conversation ||
+      m.message?.extendedTextMessage?.text ||
+      '';
+
+    // إزالة الكوماند
+    let bodyText = text.replace(prefix + commandName, '').trim();
+
+    if (!bodyText) {
+      return sock.sendMessage(
+        chatId,
+        { text: `⚠️ مثال:\n${prefix}${commandName} ليفاي | 3` },
+        { quoted: m }
+      );
+    }
+
+    // استخراج query ذكي
+    let parts = bodyText.split(' ').filter(Boolean);
+    if (parts.length === 0) return sock.sendMessage(chatId, { text: `⚠️ مثال:\n${prefix}${commandName} ليفاي | 3` }, { quoted: m });
+
+    let queryPart = parts.join(' ');
+    let [query, count] = queryPart.split('|').map(v => v.trim());
+
+    // العدد الافتراضي 3 لو مش محدد
+    count = count ? parseInt(count) : 3;
+    if (count > 5) count = 5;
+
+    const fullQuery = `edit ${query}`;
+
+    try {
+      // 🎬 React أول ما الأمر يشتغل
+      await sock.sendMessage(chatId, {
+        react: {
+          text: '🎬',
+          key: m.key
+        }
+      });
+
+      // رسالة البحث
+      await sock.sendMessage(
+        chatId,
+        { text: `> 🎬 Searching ${count} EDIT videos for: ${query}` },
+        { quoted: m }
+      );
+
+      // --- استخدام API جديد ---
+      const res = await axios.post(
+        'https://tikwm.com/api/feed/search',
+        {
+          keywords: fullQuery,
+          count: count,
+          cursor: 0,
+          web: 1
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (!res.data || !res.data.data || !res.data.data.videos) {
+        throw new Error('Invalid API response');
+      }
+
+      const videos = res.data.data.videos.slice(0, count);
+
+      if (!videos || !videos.length) {
+        return sock.sendMessage(
+          chatId,
+          { text: `> ❌ لا توجد نتائج لـ: "${query}".` },
+          { quoted: m }
+        );
+      }
+
+      // تحويل الفيديو لرسالة WA
+      async function makeVideo(url) {
+        const r = await generateWAMessageContent(
+          { video: { url } },
+          { upload: sock.waUploadToServer }
+        );
+        return r.videoMessage;
+      }
+
+      const cards = [];
+
+      for (let i = 0; i < videos.length; i++) {
+        const v = videos[i];
+        // الرابط من API الجديد
+        const videoLink = v.play || v.wmplay;
+        if (!videoLink) continue;
+
+        cards.push({
+          body: proto.Message.InteractiveMessage.Body.fromObject({
+            text:
+              `> 🎞 Result #${i + 1}\n` +
+              `> 🏷 ${v.title || 'TikTok Edit'}`
+          }),
+          header: proto.Message.InteractiveMessage.Header.fromObject({
+            hasMediaAttachment: true,
+            videoMessage: await makeVideo(videoLink)
+          }),
+          nativeFlowMessage:
+            proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
+              buttons: [
+                {
+                  name: 'cta_url',
+                  buttonParamsJson: JSON.stringify({
+                    display_text: 'Open on TikTok',
+                    url: videoLink
+                  })
+                }
+              ]
+            })
+        });
+      }
+
+      // إنشاء Carousel بنفس التنسيق
+      const finalMsg = generateWAMessageFromContent(
+        chatId,
+        {
+          viewOnceMessage: {
+            message: {
+              interactiveMessage:
+                proto.Message.InteractiveMessage.fromObject({
+                  body: {
+                    text:
+                      `> ✨ TikTok EDIT Results\n` +
+                      `> 🔎 Query: ${query}\n` +
+                      `> 📦 Count: ${videos.length}`
+                  },
+                  carouselMessage: { cards }
+                })
+            }
+          }
+        },
+        { quoted: m }
+      );
+
+      await sock.relayMessage(chatId, finalMsg.message, {
+        messageId: finalMsg.key.id
+      });
+
+    } catch (err) {
+      console.error('> TikTok EDIT Carousel Error:', err.message);
+      await sock.sendMessage(
+        chatId,
+        { text: '> ❌ حدث خطأ أثناء جلب الفيديوهات.' },
+        { quoted: m }
+      );
+    }
+  }
+};

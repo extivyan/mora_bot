@@ -1,0 +1,347 @@
+{
+  "ملصق": {
+    "category": "خدمات"
+  },
+  "picture": {
+    "category": "خدمات"
+  },
+  "تقييم": {
+    "category": "كلام"
+  },
+  "قيم": {
+    "category": "اسلام"
+  },
+  "مسائية": {
+    "category": "اسلام"
+  },
+  "صباحية": {
+    "category": "اسلام"
+  },
+  "شعر": {
+    "category": "كلام"
+  },
+  "ريستارت": {
+    "category": "manager"
+  },
+  "تجميع": {
+    "category": "arcade"
+  },
+  "رتب": {
+    "category": "arcade"
+  },
+  "تفكيك": {
+    "category": "arcade"
+  },
+  "نقاط": {
+    "category": "bank"
+  },
+  "حقوقي": {
+    "category": "خدمات"
+  },
+  "ايديت": {
+    "category": "متجر"
+  },
+  "صوت": {
+    "category": "متجر"
+  },
+  "علم": {
+    "category": "arcade"
+  },
+  "بدعه": {
+    "category": "اسلام"
+  },
+  "كونيكت": {
+    "category": "arcade"
+  },
+  "die": {
+    "category": "manager"
+  },
+  "اختبار": {
+    "category": "manager"
+  },
+  "سؤال": {
+    "category": "كلام"
+  },
+  "المطور": {
+    "category": "FHS"
+  },
+  "عدد": {
+    "category": "zarf"
+  },
+  "كتابة": {
+    "category": "arcade"
+  },
+  "تخمين": {
+    "category": "arcade"
+  },
+  "xo": {
+    "category": "arcade"
+  },
+  "شات": {
+    "category": "groups"
+  },
+  "مدح": {
+    "category": "مسليات"
+  },
+  "اهانه": {
+    "category": "مسليات"
+  },
+  "ملصقات": {
+    "category": "خدمات"
+  },
+  "mp4": {
+    "category": "متجر"
+  },
+  "mp3": {
+    "category": "متجر"
+  },
+  "edit": {
+    "category": "FHS"
+  },
+  "lid": {
+    "category": "manager"
+  },
+  "lidg": {
+    "category": "manager"
+  },
+  "pfp": {
+    "category": "خدمات"
+  },
+  "زخرف": {
+    "category": "خدمات"
+  },
+  "نسخ": {
+    "category": "manager"
+  },
+  "نسخة": {
+    "category": "manager"
+  },
+  "قص": {
+    "category": "متجر"
+  },
+  "صورة": {
+    "category": "متجر"
+  },
+  "خش": {
+    "category": "manager"
+  },
+  "عرض": {
+    "category": "خدمات"
+  },
+  "حظر": {
+    "category": "manager"
+  },
+  "حذف": {
+    "category": "groups"
+  },
+  "ربيهم": {
+    "category": "groups"
+  },
+  "تنظيف": {
+    "category": "manager"
+  },
+  "ترحيب": {
+    "category": "groups"
+  },
+  "تهكير": {
+    "category": "مسليات"
+  },
+  "باتش": {
+    "category": "manager"
+  },
+  "بلجن": {
+    "category": "manager"
+  },
+  "بوم": {
+    "category": "zarf"
+  },
+  "اخرج": {
+    "category": "manager"
+  },
+  "اسرع": {
+    "category": "manager"
+  },
+  "منع": {
+    "category": "manager"
+  },
+  "فيديو": {
+    "category": "متجر"
+  },
+  "لينك": {
+    "category": "خدمات"
+  },
+  "اقبلهم": {
+    "category": "groups"
+  },
+  "بريفكس": {
+    "category": "FHS"
+  },
+  "مود": {
+    "category": "FHS"
+  },
+  "points": {
+    "category": "FHS"
+  },
+  "zarf": {
+    "category": "FHS"
+  },
+  "كفاره": {
+    "category": "اسلام"
+  },
+  "موعظه": {
+    "category": "اسلام"
+  },
+  "قصه": {
+    "category": "اسلام"
+  },
+  "ضريبة": {
+    "category": "points"
+  },
+  "تعديل": {
+    "category": "manager"
+  },
+  "ذكر": {
+    "category": "اسلام"
+  },
+  "تفسير": {
+    "category": "اسلام"
+  },
+  "تأمل": {
+    "category": "اسلام"
+  },
+  "اسماءالله": {
+    "category": "اسلام"
+  },
+  "سيره": {
+    "category": "اسلام"
+  },
+  "سنن": {
+    "category": "اسلام"
+  },
+  "نصائح": {
+    "category": "اسلام"
+  },
+  "صحابه": {
+    "category": "اسلام"
+  },
+  "فتوي": {
+    "category": "اسلام"
+  },
+  "معجزه": {
+    "category": "اسلام"
+  },
+  "فقه": {
+    "category": "اسلام"
+  },
+  "اجر": {
+    "category": "اسلام"
+  },
+  "اذان": {
+    "category": "اسلام"
+  },
+  "راقب": {
+    "category": "zarf"
+  },
+  "هل": {
+    "category": "zarf"
+  },
+  "زرف": {
+    "category": "zarf"
+  },
+  "فنش": {
+    "category": "zarf"
+  },
+  "انزلو": {
+    "category": "zarf"
+  },
+  "جروب": {
+    "category": "manager"
+  },
+  "اتعلم": {
+    "category": "كلام"
+  },
+  "نصيحة": {
+    "category": "كلام"
+  },
+  "منشن": {
+    "category": "groups"
+  },
+  "جماعي": {
+    "category": "groups"
+  },
+  "bot": {
+    "category": "manager"
+  },
+  "نخب": {
+    "category": "manager"
+  },
+  "نخبة": {
+    "category": "manager"
+  },
+  "مطور": {
+    "category": "manager"
+  },
+  "فرمتة": {
+    "category": "manager"
+  },
+  "قرعة": {
+    "category": "مسليات"
+  },
+  "رياكت": {
+    "category": "manager"
+  },
+  "فخ": {
+    "category": "zarf"
+  },
+  "كتم": {
+    "category": "groups"
+  },
+  "معاني": {
+    "category": "اسلام"
+  },
+  "طرد": {
+    "category": "groups"
+  },
+  "منشنات": {
+    "category": "manager"
+  },
+  "بوت": {
+    "category": "groups"
+  },
+  "احكي": {
+    "category": "متجر"
+  },
+  "ادمن": {
+    "category": "groups"
+  },
+  "حالة": {
+    "category": "manager"
+  },
+  "حديث": {
+    "category": "اسلام"
+  },
+  "انذار": {
+    "category": "groups"
+  },
+  "ترجملي": {
+    "category": "متجر"
+  },
+  "تحويل": {
+    "category": "bank"
+  },
+  "اوامر": {
+    "category": "groups"
+  },
+  "اونربوت": {
+    "category": "FHS"
+  },
+  "اية": {
+    "category": "اسلام"
+  },
+  "انبياء": {
+    "category": "اسلام"
+  },
+  "تحميل": {
+    "category": "متجر"
+  }
+}
